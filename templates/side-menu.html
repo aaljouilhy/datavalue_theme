@@ -1,0 +1,72 @@
+<div class="side-menu" id="side-menu">
+    <div class="side-mobile-menu animated" :class="(frappe.utils.is_rtl())?'slideInRight':'slideInLeft'">
+        <button type="button" class="mobile-back-modules" v-on:click="mobile_back_modules()" v-if="is_shown_mobile_menu">
+            <i class="fal fa-arrow-left"></i> [[active_module.name]]
+        </button>
+        <ul class="list-unstyled mobile-modules-list" v-if="!is_shown_mobile_menu">
+            <li v-for="(module, index) in modules_list" :style="'animation-delay:'+(0.06*(index+1))+'s;'" :class="(active_module.name==module.name)?'active':''">
+                <a v-on:click="open_module(module.name,true)">
+                    <i :class="get_module_icon(module.name,module.icon)+' animated-icon'"></i>
+                    [[(module.label)?module.label:module.name]]
+                </a>
+            </li>
+        </ul>
+        <div class="dv-placeholder-wave" v-if="!module_items_list[active_module.name] || !module_items_list[active_module.name].length">
+            <div class="dv-placeholder" style="height:40px;display:block;border-radius:4px;margin:10px 15px;"></div>
+        </div>
+        <ul class="list-unstyled mobile-modules-menu-list" v-if="is_shown_mobile_menu && module_items_list[active_module.name] && module_items_list[active_module.name].length">
+            <li :class="(active_module.name==current_doctype)?'active':''">
+                <a v-on:click="open_dashboard(active_module.name)" :data-dashboard="active_module.name">{{_("Dashboard")}}</a>
+            </li>
+            <li v-for="item in module_items_list[active_module.name]">
+                <a> [[item.label]] <i class="far fa-angle-down sub-menu-arrow"></i></a>
+                <ul class="list-unstyled">
+                    <li class="animated faster" :class="menu_items_animate" :style="'animation-delay:'+(0.1*(index+1))+'s;'" v-for="(link, index) in item.links">
+                        <a :href="generate_route(link)" :data-label="link.link_to">[[link.label]]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="modules-menu">
+        <div class="modules-menu-list">
+            <div class="dv-row dv-row-sm animated fadeInLeft">
+                <div class="dv-col-6 animated faster fadeInLeft" v-for="(module, index) in modules_list" :style="'animation-delay:'+(0.06*(index+1))+'s;'">
+                    <a v-on:click="open_module(module.name)" class="animated-tada" :class="(active_module.name==module.name)?'active':''">
+                        <i :class="get_module_icon(module.name,module.icon)+' animated-icon'"></i>
+                        [[(module.label)?module.label:module.name]]
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="side-menu-icons" :class="(theme_settings.show_icon_label && theme_settings.show_icon_label=='1')?'menu-icons-with-label':''">
+        <ul class="list-unstyled">
+            <li v-for="module in modules_list" :class="(active_module.name==module.name)?'active':''">
+                <a v-on:click="open_module(module.name)" :title="(module.label)?module.label:module.name" :data-toggle="(theme_settings.hide_icon_tooltip && theme_settings.hide_icon_tooltip=='1')?'':'tipsy'" class="animated-tada">
+                    <div><i :class="get_module_icon(module.name,module.icon)+' animated-icon'"></i></div>
+                    <span v-if="theme_settings.show_icon_label && theme_settings.show_icon_label=='1'">[[(module.label)?module.label:module.name]]</span>
+                    <!--                    <i :class="get_module_icon(module.name,module.icon)+' animated-icon'"></i>-->
+                    <!--                    <span v-html="frappe.utils.icon(module.icon || 'folder-normal', 'lg')"></span>-->
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="side-menu-items">
+        <ul class="list-unstyled">
+            <li class="navigation-divider">
+                <span class="sub-menu-icon"><i :class="module_icon[active_module.name]"></i></span> [[active_module.label]]
+            </li>
+        </ul>
+        <ul class="dropdown-list list-unstyled">
+            <li v-for="item in module_items_list[active_module.name]">
+                <a> [[item.label]] <i class="far fa-angle-down sub-menu-arrow"></i></a>
+                <ul class="list-unstyled desktop-list-menu">
+                    <li class="animated faster" :class="menu_items_animate" :style="'animation-delay:'+(0.1*(index+1))+'s;'" v-for="(link, index) in item.links">
+                        <a :href="generate_route(link)" :data-label="link.link_to">[[link.label]]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

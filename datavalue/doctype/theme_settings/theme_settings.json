@@ -1,0 +1,122 @@
+{
+ "actions": [
+  {
+   "action": "frappe.sessions.clear",
+   "action_type": "Server Action",
+   "label": "Clear Cache"
+  }
+ ],
+ "allow_rename": 1,
+ "creation": "2021-12-25 17:07:18.673777",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "dark_view",
+  "theme_color",
+  "side_menu_section",
+  "show_icon_label",
+  "hide_icon_tooltip",
+  "login_page_section",
+  "enable_background",
+  "background_type",
+  "full_page_background",
+  "transparent_background",
+  "background_photo",
+  "slideshow"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "dark_view",
+   "fieldtype": "Check",
+   "label": "Dark View"
+  },
+  {
+   "fieldname": "theme_color",
+   "fieldtype": "Color",
+   "label": "Color"
+  },
+  {
+   "fieldname": "login_page_section",
+   "fieldtype": "Section Break",
+   "label": "Login Page"
+  },
+  {
+   "fieldname": "background_type",
+   "fieldtype": "Select",
+   "label": "Background Type",
+   "options": "Single Photo\nSlideshow"
+  },
+  {
+   "depends_on": "eval:doc.background_type=='Single Photo'",
+   "fieldname": "background_photo",
+   "fieldtype": "Attach Image",
+   "label": "Background Photo"
+  },
+  {
+   "depends_on": "eval:doc.background_type=='Slideshow'",
+   "fieldname": "slideshow",
+   "fieldtype": "Table",
+   "label": "Slideshow",
+   "options": "Slideshow Photos"
+  },
+  {
+   "default": "0",
+   "fieldname": "full_page_background",
+   "fieldtype": "Check",
+   "label": "Full Page Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "transparent_background",
+   "fieldtype": "Check",
+   "label": "Transparent Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_background",
+   "fieldtype": "Check",
+   "label": "Enable Background"
+  },
+  {
+   "fieldname": "side_menu_section",
+   "fieldtype": "Section Break",
+   "label": "Side Menu"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_icon_label",
+   "fieldtype": "Check",
+   "label": "Show Icon Label"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_icon_tooltip",
+   "fieldtype": "Check",
+   "label": "Hide Icon Tooltip"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-01-24 22:14:52.833939",
+ "modified_by": "Administrator",
+ "module": "DataValue",
+ "name": "Theme Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Website Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
